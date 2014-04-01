@@ -230,11 +230,11 @@ class SUSTAIN:
 			self.clusters.append(item)
 			self.connections.append(array([0.0]*len(item)*len(item[0])))
 			self.stimulate(item,env)
-			winnerindex = self.coutputs.index(max(self.coutputs))
+			winnerindex = self.activations.index(max(self.activations))
 			self.adjustcluster(winnerindex, item, env)
 		else:
 			# is most activated cluster in the correct category? (Equation #10 in Psych Review)
-			winnerindex = self.coutputs.index(max(self.coutputs))
+			winnerindex = self.activations.index(max(self.activations))
 			
 			# binary "masks" again force learning only on queried dimensions
 			maskhash = {'k':0,'?':1,'m':0}
@@ -243,12 +243,12 @@ class SUSTAIN:
 			maskclus = map(lambda x,y: x*y, self.clusters[winnerindex], mask)
 			tmpdist = map(lambda x,y: sum(abs(x-y))/2.0,maskitem, maskclus)
 		
-			if (max(self.coutputs) < self.THRESHOLD) or (sum(tmpdist) != 0.0): # (Equation #11 in Psych Review)
+			if (max(self.activations) < self.THRESHOLD) or (sum(tmpdist) != 0.0): # (Equation #11 in Psych Review)
 				# create new cluster
 				self.clusters.append(item)
 				self.connections.append(array([0.0]*len(item)*len(item[0])))
 				self.stimulate(item,env)
-				winnerindex = self.coutputs.index(max(self.coutputs))
+				winnerindex = self.activations.index(max(self.activations))
 				self.adjustcluster(winnerindex, item, env)
 				
 			else:
